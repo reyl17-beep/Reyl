@@ -224,54 +224,17 @@ function createHeart() {
 
 setInterval(createHeart, 500);
 
-let audioContext;
-let playing = false;
+<audio id="bgMusic" loop>
+  <source src="ssstik.io_1791101956827.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const bgMusic = document.getElementById("bgMusic");
 
 function playMusic() {
-  if (playing) return;
-
-  playing = true;
-  audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-  const notes = [
-    261.63, 329.63, 392.00,
-    329.63, 293.66, 349.23,
-    440.00, 392.00
-  ];
-
-  notes.forEach((frequency, index) => {
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-
-    oscillator.frequency.value = frequency;
-    oscillator.type = "sine";
-
-    gain.gain.setValueAtTime(
-      0.0001,
-      audioContext.currentTime + index * 0.5
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-      0.12,
-      audioContext.currentTime + index * 0.5 + 0.05
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-      0.0001,
-      audioContext.currentTime + index * 0.5 + 0.45
-    );
-
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
-
-    oscillator.start(audioContext.currentTime + index * 0.5);
-    oscillator.stop(audioContext.currentTime + index * 0.5 + 0.5);
-  });
-
-  setTimeout(() => {
-    playing = false;
-  }, 4500);
+  bgMusic.play().catch(() => {});
 }
+</script>
 </script>
 
 </body>

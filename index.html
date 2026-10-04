@@ -224,17 +224,12 @@ function createHeart() {
 
 setInterval(createHeart, 500);
 
-<audio id="bgMusic" loop>
-  <source src="ssstik.io_1791101956827.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-const bgMusic = document.getElementById("bgMusic");
+const bgMusic = new Audio("ssstik.io_1791101956827.mp3");
+bgMusic.loop = true;
 
 function playMusic() {
   bgMusic.play().catch(() => {});
 }
-</script>
 </script>
 
 </body>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesuatu Buat Kamu 💗</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffd6e7, #fff0f6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: #5a2942;
+}
+
+.container {
+  width: 90%;
+  max-width: 430px;
+  text-align: center;
+  background: rgba(255,255,255,0.85);
+  padding: 30px 22px;
+  border-radius: 25px;
+  box-shadow: 0 10px 35px rgba(150,70,100,0.2);
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+p {
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+button {
+  border: none;
+  padding: 14px 25px;
+  margin-top: 15px;
+  border-radius: 30px;
+  background: #ff6f9f;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(255,80,130,0.3);
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.photo {
+  width: 100%;
+  max-height: 330px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.heart {
+  position: fixed;
+  top: -20px;
+  font-size: 20px;
+  animation: fall linear forwards;
+  z-index: 1;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.love {
+  font-size: 22px;
+  color: #ff4f8b;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- HALAMAN 1 -->
+  <div class="page active" id="page1">
+    <h1>Ada sesuatu buat kamu... 💗</h1>
+    <p>
+      Aku punya sedikit kejutan buat seseorang
+      yang spesial banget buat aku.
+    </p>
+    <button onclick="nextPage(2)">
+      Buka sekarang 💗
+    </button>
+  </div>
+
+  <!-- HALAMAN 2 -->
+  <div class="page" id="page2">
+    <img src="foto.jpg" class="photo">
+
+    <h1>Hai, cantik! 🥺💕</h1>
+
+    <p>
+      Kamu itu cantik, lucu, imut,
+      dan entah kenapa selalu berhasil
+      bikin aku senyum sendiri.
+    </p>
+
+    <p>
+      Aku cuma mau bilang...
+      aku bersyukur banget bisa kenal kamu.
+    </p>
+
+    <button onclick="nextPage(3)">
+      Ada surat buat kamu 💌
+    </button>
+  </div>
+
+  <!-- HALAMAN 3 -->
+  <div class="page" id="page3">
+    <h1>Untuk kamu 💌</h1>
+
+    <p>
+      Mungkin aku nggak selalu pandai
+      menunjukkan perasaanku.
+    </p>
+
+    <p>
+      Tapi percayalah,
+      kamu punya tempat yang spesial
+      di hati aku.
+    </p>
+
+    <p>
+      Terima kasih sudah hadir,
+      sudah membuat hari-hariku
+      jadi lebih berwarna.
+    </p>
+
+    <p class="love">
+      Aku sayang kamu. 💗
+    </p>
+
+    <button onclick="nextPage(4)">
+      Lanjut... 🥺
+    </button>
+  </div>
+
+  <!-- HALAMAN 4 -->
+  <div class="page" id="page4">
+    <h1>Ini buat kamu 💗</h1>
+
+    <p>
+      Kalau suatu hari kamu merasa
+      nggak cukup baik,
+      ingat satu hal...
+    </p>
+
+    <p class="love">
+      Buat aku, kamu sudah lebih dari cukup.
+    </p>
+
+    <p>
+      Jangan lupa senyum ya,
+      karena senyum kamu itu favorit aku. 🥺
+    </p>
+
+    <button onclick="playMusic()">
+      🎵 Putar musik romantis
+    </button>
+
+    <button onclick="alert('Aku sayang kamu banyak-banyak! 💗🥺')">
+      💌 Pesan terakhir
+    </button>
+  </div>
+
+</div>
+
+<script>
+function nextPage(number) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.remove("active");
+  });
+
+  document.getElementById("page" + number).classList.add("active");
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💗";
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (3 + Math.random() * 4) + "s";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 7000);
+}
+
+setInterval(createHeart, 500);
+
+let audioContext;
+let playing = false;
+
+function playMusic() {
+  if (playing) return;
+
+  playing = true;
+  audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+  const notes = [
+    261.63, 329.63, 392.00,
+    329.63, 293.66, 349.23,
+    440.00, 392.00
+  ];
+
+  notes.forEach((frequency, index) => {
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    oscillator.frequency.value = frequency;
+    oscillator.type = "sine";
+
+    gain.gain.setValueAtTime(
+      0.0001,
+      audioContext.currentTime + index * 0.5
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.12,
+      audioContext.currentTime + index * 0.5 + 0.05
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      audioContext.currentTime + index * 0.5 + 0.45
+    );
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    oscillator.start(audioContext.currentTime + index * 0.5);
+    oscillator.stop(audioContext.currentTime + index * 0.5 + 0.5);
+  });
+
+  setTimeout(() => {
+    playing = false;
+  }, 4500);
+}
+</script>
+
+</body>
+</html>
